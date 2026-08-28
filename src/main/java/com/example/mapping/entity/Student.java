@@ -8,11 +8,16 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_card_id")
+    private student_IDCard idCard;
 
     public Student() {
     }
@@ -31,5 +36,21 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public  student_IDCard  getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard( student_IDCard  idCard) {
+        this.idCard = idCard;
     }
 }
