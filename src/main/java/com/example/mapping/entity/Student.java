@@ -1,6 +1,7 @@
 package com.example.mapping.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Student {
@@ -10,14 +11,25 @@ public class Student {
     private int id;
 
     private String name;
-//Bidirectional mapping
+
+    // Bidirectional: Department ↔ Student
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
- //Unidirectional mapping,Student--Student_IDcard
+
+    // Unidirectional: Student → student_IDCard
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_card_id")
     private student_IDCard idCard;
+
+    // Unidirectional: Student → Hobby
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "student_hobby",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "hobby_id")
+    )
+    private List<Hobby> hobbies;
 
     public Student() {
     }
@@ -46,11 +58,19 @@ public class Student {
         this.department = department;
     }
 
-    public  student_IDCard  getIdCard() {
+    public student_IDCard getIdCard() {
         return idCard;
     }
 
-    public void setIdCard( student_IDCard  idCard) {
+    public void setIdCard(student_IDCard idCard) {
         this.idCard = idCard;
+    }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
     }
 }
