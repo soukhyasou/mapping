@@ -10,11 +10,11 @@ public class Student {
     private int id;
 
     private String name;
-
+//Bidirectional mapping
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
+ //Unidirectional mapping,Student--Student_IDcard
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_card_id")
     private student_IDCard idCard;
